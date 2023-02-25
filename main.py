@@ -1,29 +1,20 @@
 from aiogram import executor
-from config import dp
 from aiogram.dispatcher.filters import Text
-from handlers.basic import (
-    cmd_start,
-    cmd_help,
-    cmd_myinfo,
-    cmd_picture
+from dotenv import load_dotenv
+from os import getenv
+from config import dp
+from handlers.admin import (
+    check_bad_words,
+    ban_user,
+    ban_user_warning
 )
-from handlers.jobs import (
-    show_courier,
-    show_collector,
-    show_jobs,
-    show_merchandiser
-)
-
+import logging
+logging.basicConfig(level=logging.INFO)
+load_dotenv()
 
 if __name__ == "__main__":
-    dp.register_message_handler(cmd_start, commands=['start'])
-    dp.register_message_handler(cmd_help, commands=['help'])
-    dp.register_message_handler(cmd_myinfo, commands=['myinfo'])
-    dp.register_message_handler(cmd_picture, commands=['picture'])
-    
-    dp.register_callback_query_handler(show_jobs, Text(equals="jobs"))
-    dp.register_message_handler(show_courier, Text(startswith="Курьер"))
-    dp.register_message_handler(show_collector, Text(startswith="Сборщик"))
-    dp.register_message_handler(show_merchandiser, Text(startswith="товаровед"))
-    print("hello")
-    executor.start_polling(dp)
+    dp.register_message_handler(check_bad_words)
+    dp.register_callback_query_handler(ban_user_warning, Text(startswith="abuser_name_warning"))
+    dp.register_callback_query_handler(ban_user, Text(startswith="abuser_id"))
+    print('hello')
+    executor.start_polling(dp, skip_updates=True)
