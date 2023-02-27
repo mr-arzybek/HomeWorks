@@ -27,6 +27,7 @@ async def cmd_help(message: types.Message):
         /help - показывает список команд
         /myinfo - отправляет пользователю его данные(id, first_name, username)
         /picture - отправляет слуайную картинку
+        /form - вызов формы
                          """)
     await message.delete()
     
