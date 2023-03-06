@@ -1,9 +1,9 @@
 import string
 import json
-from aiogram import types, bot
+from aiogram import types, Bot, Dispatcher
 from aiogram.types import CallbackQuery
 
-from config import dp
+from config import dp2, bot2
 
 admin_id_count = []
 
@@ -49,8 +49,7 @@ async def check_bad_words(message: types.Message):
 
 async def ban_user(callback: CallbackQuery):
     """
-    обработчик, чтоб банить пользователя в чате
-    через команду
+    обработчик чтоб банить пользователя в чате через команду
     """
     await callback.answer()
     message = callback.message
@@ -85,3 +84,6 @@ async def ban_user_warning(callback: CallbackQuery):
             text=f'{callback.from_user.first_name} у тебя нет прав для бана!',
             chat_id=message.chat.id
         )
+# @dp.callback_query_handler(text=("abuser_id", "abuser_name_warning"))
+# async def call_main_menu(call: CallbackQuery):
+#     await bot2.delete_message(chat_id=call.from_user.id, message_id=call.message.message_id)
